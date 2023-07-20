@@ -16,7 +16,7 @@
 
 // Global Animation Settings
 #define FPS                 60
-#define FADE_AMOUNT         20
+#define FADE_AMOUNT         40
 
 
 // Public class
@@ -110,18 +110,16 @@ class BigUmbrella {
 
     void rain() {
       // Pick a random rib to spawn a rain drop on
-      int rib = random(0, 40);
+      int rib = random(0, 9);
+      color = CHSV(hue + random(0, 5) % 255, 255 - random(0, 150), 255);
       if (rib < 8) { ring[rib] = color; }
 
-      // Pick a random color
-      index += 1;
-      if (index > 2) {
+      // Increment the hue
+      if (index > 1) {
         hue = hue + 1 % 255;
         index = 0;
-      }
+      } else { index += 1; }
       
-      color = CHSV(hue, 255, 255);
-
       // for each rib in the ring
       for (int i=0; i<UMBRELLA_RIB_COUNT; i++) {
 
@@ -136,7 +134,7 @@ class BigUmbrella {
       }
       shiftAllY();
       FastLED.show();
-      delay(80);
+      delay(40);
     }
 
     void shiftAllY() {
